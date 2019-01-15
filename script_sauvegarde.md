@@ -5,7 +5,7 @@
 import boto3
 import botocore
 
-# renseignement du service AWS auquel je souhaiterais accéder
+# Renseignement du service AWS auquel je souhaiterais accéder
 
 s3_resource = boto3.resource('s3')
 
@@ -17,9 +17,19 @@ ACCESS_SECRET_KEY = "xPrqJ0/J1MxVX5RsOWPlU6oGeHYI8LZANtAwx8Se"
 
 BUCKET_NAME = "monprojet4"
 
-#
+
+# Methode de chargement d'un fichier dans le bucket par son nom
 
 s3_resource.Bucket(BUCKET_NAME).upload_file(Filename="/home/adminsys/mes_fichiers/fichier_test.txt",Key="fichier_test.txt")
 
+# Affichage
+
 print("fichier sauvegardé sur s3 avec succes")
 
+affichage=input("Voulez vous afficher le contenu actuel de votre bucket?")
+
+if affichage == "oui":
+	for fichiers in BUCKET_NAME.objects.all():
+		print(fichiers.key)
+else:
+	print("fin du traitement")
