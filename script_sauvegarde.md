@@ -21,16 +21,21 @@ s3_resource.Bucket(mon_bucket).upload_file(Filename="/home/adminsys/mes_fichiers
 # Affichage du contenu du bucket
 print("fichier sauvegardé sur s3 avec succès")
 
-affichage=input("Voulez vous afficher le contenu actuel de votre bucket?(o/n)")
-
 conn = boto3.client('s3')
 
+affichage = input("Voulez vous afficher le contenu actuel de votre bucket?(o/n)"
+
 try:
-	affichage = str(affichage)
-	if affichage != "o" or "n"
-		raise ValueError("Veuillez entre o ou n")
+
+	assert affichage == "o" or "n":
+
+except AssertionError:
+	print("Veuillez entrer o ou n")	
+
 if affichage == "o":
-	for fichiers in conn.list_objects(Bucket=mon_bucket)['Contents']:
-		print(fichiers['Key'])
-else:
-	print("fin du traitement")
+		for fichiers in conn.list_objects(Bucket=mon_bucket)['Contents']:
+			print(fichiers['Key'])
+
+
+	else:
+		print("fin du traitement")
