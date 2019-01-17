@@ -18,24 +18,31 @@ mon_bucket = "monprojet4"
 # Methode de chargement d'un fichier dans le bucket par son nom
 s3_resource.Bucket(mon_bucket).upload_file(Filename="/home/adminsys/mes_fichiers/fichier_test.txt",Key="fichier_test.txt")
 
-# Affichage du contenu du bucket
 print("fichier sauvegardé sur s3 avec succès")
+
+# Affichage du contenu du bucket
 
 conn = boto3.client('s3')
 
-affichage = input("Voulez vous afficher le contenu actuel de votre bucket?(o/n)"
+
+# Levée d'une exception en cas d'erreur de frappe
+
+affichage = input("Voulez vous afficher le contenu actuel de votre bucket?(o/n) :")
 
 try:
 
-	assert affichage == "o" or "n":
+
+	assert affichage == "o" or "n"
 
 except AssertionError:
-	print("Veuillez entrer o ou n")	
+
+	print("Veuillez entrer o ou n")
+
 
 if affichage == "o":
-		for fichiers in conn.list_objects(Bucket=mon_bucket)['Contents']:
-			print(fichiers['Key'])
+	for fichiers in conn.list_objects(Bucket=mon_bucket)['Contents']:
+		print(fichiers['Key'])
 
 
-	else:
-		print("fin du traitement")
+else:
+	print("fin du traitement")
