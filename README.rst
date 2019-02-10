@@ -40,3 +40,54 @@ s3_resource.Bucket(mon_bucket).upload_file(Filename="/chemin/nom_du_fichier,key=
 
 afin de lister le contenu du bcket utiliser la methode conn.list_object
 for fichiers in conn.list_objects(Bucket=mon_bucket)['Contents']
+
+paramètrer le crontab afin de planifier une sauvegarde automatique
+
+explication
+-----------
+
+- importation de la librairie boto3
+pour l'utilisation de la librairie dans notre script
+
+- importation des modules datetime et time
+afin de capturer la date et le temps d'exécution du script
+
+- declaration du service sur AWS auquel nous avons besoin (s3)
+maintenant que nous avons déclaré une ressource nous pouvons effectuer des requêtes et obtenir
+des réponses de ce service
+
+- affectation de la variable mon_bucket contenant le nom de mon bucket
+
+- affactation de la variable début
+afin de determiner le moment du début du chargement
+
+- méthode de chargement du fichier de boto3 avec les fonctions s3.resource.Bucket().upload_file()
+afin de faire la sauvegarde du fichier dans le bucket sur s3
+
+- affectation de la variable fin
+afin de determiner le momenbt de la fin du chargement
+
+- on affiche un message indiquant la fin de la sauvegarde
+
+- on affiche un message indiquant la durée de la sauvagerde en soustrayant le variable fin à la
+variable début
+
+- affectation de la variable conn
+afin de se connecter au bucket et appeler la fonction list_object()
+
+- utilisation d'une boucle while
+afin de demander à l'utilisateur si il veut afficher ou non le contenu du bucket après la sauvegarde
+
+- affectation de la variable affichage
+afin de capturer la réponse de l'utilisateur
+
+- création d'un bloc try contenant des conditions if,elif,else
+afin de lever une erreur d'assertion au cas ou l'utilisateur ne tape pas "o" ou "n"
+
+- méthode de connexion et listage du contenu bucket avec la fonction conn.list_objects()
+combinée d'ne boucle for.
+afin d'afficher chaque élèments parcourus
+
+- inscription de la date d'execution du script et du temps de chargement dans un fichier avec la
+méthode write()
+afin d'avoir un historique de la date exécution et vérifier le temps de chargement
