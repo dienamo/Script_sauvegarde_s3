@@ -1,0 +1,2 @@
+/home/adminsys/fichier_test.txt
+/home/adminsys/guide-linux.pdf
