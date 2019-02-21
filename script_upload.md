@@ -3,6 +3,7 @@ import boto3
 from datetime import datetime
 import time
 import os
+import sys
 s3_resource = boto3.resource('s3')
 mon_bucket = "monprojet6"
 
@@ -19,22 +20,46 @@ if args.chemin:
 	f = open(os.path.join('/home/adminsys/fichier_aws.txt')).read().splitlines()
 
 	for fichier in f:
-		s3_resource.Bucket(mon_bucket).\
-		upload_file(Filename = f'{fichier}',Key =os.path.basename(fichier))
+		if os.path.exists(fichier):
+			s3_resource.Bucket(mon_bucket).\
+			upload_file(Filename = f'{fichier}',Key =os.path.basename(fichier))
+			print("-----------------------------------------")
+			print("Sauvegarde multiple effectuée avec succès")
+			print("-----------------------------------------")
 
+		else:
+			print(f'fichier {os.path.basename(fichier)} introuvable dans {os.path.dirname(fichier)}')
+			f = open("Fichiers_en erreur.txt","a")
+			f.write(f'fichier {os.path.basename(fichier)} introuvable dans {os.path.dirname(fichier)}\n')
+			f.close()
 # Methode de chargement d'un fichier dans le bucket par son nom
 # On determine le moment de la fin de la sauvegarde
 	fin = time.time()
 
 # On affiche un message indiquant la fin de la sauvegarde
-	print("-----------------------------------------")
-	print("Sauvegarde multiple effectuée avec succès")
-	print("-----------------------------------------")
 
 #On affiche un message indiquant le temps de la sauvegarde
-	print(f"Temps de chargement: {fin - début} secondes")
-	print("-----------------------------------------")
 else:
-	fichier = input("Quel fichier voulez vous sauvegarder? : ")
-	chemin = input("Veuillez entrer le chemin du fichier à sauvegarder :")
-	s3_resource.Bucket(mon_bucket).upload_file(Filename = f'{chemin}{fichier}',Key = fichier)
+	while True:
+
+		fichier = input("Quel fichier voulez vous sauvegarder? ('q' pour quitter): ")
+
+		try:
+			assert fichier != 'q'
+
+		except AssertionError:
+
+			sys.exit()
+
+		chemin = input("Veuillez entrer le chemin du fichier à sauvegarder :")
+
+
+		if os.path.exists(fichier):
+			s3_resource.Bucket(mon_bucket).upload_file(Filename = f'{chemin}{fichier}',Key = fichier)
+			print("---------------------------------------")
+			print("Sauvegarde unique effectuée avec succès")
+			print("---------------------------------------")
+			break
+		else:
+			print(f'fichier {os.path.basename(fichier)} introuvable dans {chemin}')
+			continue
