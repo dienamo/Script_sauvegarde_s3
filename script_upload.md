@@ -59,10 +59,10 @@ else:
 			sys.exit()
 
 
-		if os.path.exists(fichier):
+		if os.path.exists(f'{path}{fichier}'):
 			s3_resource.Bucket(mon_bucket).upload_file(Filename = f'{path}{fichier}',Key = fichier)
 			print("---------------------------------------")
-			print("Sauvegarde unique effectuée avec succès")
+			print(f"Sauvegarde de {fichier} effectuée avec succès dans {mon_bucket}")
 			print("---------------------------------------")
 			break
 		else:
