@@ -5,6 +5,7 @@ import time
 import os
 import sys
 s3_resource = boto3.resource('s3')
+
 mon_bucket = "monprojet6"
 
 from argparse import ArgumentParser
@@ -30,7 +31,7 @@ if args.chemin:
 		else:
 			print(f'fichier {os.path.basename(fichier)} introuvable dans {os.path.dirname(fichier)}')
 			f = open("Fichiers_en erreur.txt","a")
-			f.write(f'fichier {os.path.basename(fichier)} introuvable dans {os.path.dirname(fichier)}\n')
+			f.write(f'fichier {os.path.basename(fichier)} introuvable dans {os.path.dirname(fichier)}: {datetime.now()}\n')
 			f.close()
 # Methode de chargement d'un fichier dans le bucket par son nom
 # On determine le moment de la fin de la sauvegarde
