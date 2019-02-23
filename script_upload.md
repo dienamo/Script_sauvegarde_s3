@@ -18,7 +18,7 @@ args = parser.parse_args()
 
 mon_bucket = args.bucket
 
-chemin = args.chemin
+path = args.path
 début = time.time()
 
 # On determine le moment du début de l'execution de la sauvegarde
@@ -58,15 +58,13 @@ else:
 
 			sys.exit()
 
-		chemin = input("Veuillez entrer le chemin du fichier à sauvegarder :")
-
 
 		if os.path.exists(fichier):
-			s3_resource.Bucket(mon_bucket).upload_file(Filename = f'{chemin}{fichier}',Key = fichier)
+			s3_resource.Bucket(mon_bucket).upload_file(Filename = f'{path}{fichier}',Key = fichier)
 			print("---------------------------------------")
 			print("Sauvegarde unique effectuée avec succès")
 			print("---------------------------------------")
 			break
 		else:
-			print(f'fichier {os.path.basename(fichier)} introuvable dans {chemin}')
+			print(f'fichier {os.path.basename(fichier)} introuvable dans {path}')
 			continue
