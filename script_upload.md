@@ -11,8 +11,14 @@ mon_bucket = "monprojet6"
 from argparse import ArgumentParser
 parser = ArgumentParser()
 parser.add_argument("-f", action="store_true",dest="chemin",help="chemin de location restauration")
+parser.add_argument("-b","--bucket",help="nom du bucket")
+parser.add_argument("-c","--path",help="chemin de location restauration")
+# On déclare la variable args qui représente la methode parse_args utilisée par Argumentparser
 args = parser.parse_args()
 
+mon_bucket = args.bucket
+
+chemin = args.chemin
 début = time.time()
 
 # On determine le moment du début de l'execution de la sauvegarde
