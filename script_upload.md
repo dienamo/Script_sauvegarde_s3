@@ -22,49 +22,53 @@ path = args.path
 début = time.time()
 
 # On determine le moment du début de l'execution de la sauvegarde
-if args.chemin:
+def sauvegarde():
 
-	f = open(os.path.join('/home/adminsys/fichier_aws.txt')).read().splitlines()
+	if args.chemin:
 
-	for fichier in f:
-		if os.path.exists(fichier):
-			s3_resource.Bucket(mon_bucket).\
-			upload_file(Filename = f'{fichier}',Key =os.path.basename(fichier))
-			print("-----------------------------------------")
-			print("Sauvegarde multiple effectuée avec succès")
-			print("-----------------------------------------")
+		f = open(os.path.join('/home/adminsys/fichier_aws.txt')).read().splitlines()
 
-		else:
-			print(f'fichier {os.path.basename(fichier)} introuvable dans {os.path.dirname(fichier)}')
-			f = open("Fichiers_en erreur.txt","a")
-			f.write(f'fichier {os.path.basename(fichier)} introuvable dans {os.path.dirname(fichier)}: {datetime.now()}\n')
-			f.close()
+		for fichier in f:
+			if os.path.exists(fichier):
+				s3_resource.Bucket(mon_bucket).\
+				upload_file(Filename = f'{fichier}',Key =os.path.basename(fichier))
+				print("-----------------------------------------")
+				print("Sauvegarde multiple effectuée avec succès")
+				print("-----------------------------------------")
+
+			else:
+				print(f'fichier {os.path.basename(fichier)} introuvable dans {os.path.dirname(fichier)}')
+				f = open("Fichiers_en erreur.txt","a")
+				f.write(f'fichier {os.path.basename(fichier)} introuvable dans {os.path.dirname(fichier)}: {datetime.now()}\n')
+				f.close()
 # Methode de chargement d'un fichier dans le bucket par son nom
 # On determine le moment de la fin de la sauvegarde
-	fin = time.time()
+		fin = time.time()
 
 # On affiche un message indiquant la fin de la sauvegarde
 
 #On affiche un message indiquant le temps de la sauvegarde
-else:
-	while True:
+	else:
+		while True:
 
-		fichier = input("Quel fichier voulez vous sauvegarder? ('q' pour quitter): ")
+			fichier = input("Quel fichier voulez vous sauvegarder? ('q' pour quitter): ")
 
-		try:
-			assert fichier != 'q'
+			try:
+				assert fichier != 'q'
 
-		except AssertionError:
+			except AssertionError:
 
-			sys.exit()
+				sys.exit()
 
 
-		if os.path.exists(f'{path}{fichier}'):
-			s3_resource.Bucket(mon_bucket).upload_file(Filename = f'{path}{fichier}',Key = fichier)
-			print("---------------------------------------")
-			print(f"Sauvegarde de {fichier} effectuée avec succès dans {mon_bucket}")
-			print("---------------------------------------")
-			break
-		else:
-			print(f'fichier {os.path.basename(fichier)} introuvable dans {path}')
-			continue
+			if os.path.exists(f'{path}{fichier}'):
+				s3_resource.Bucket(mon_bucket).upload_file(Filename = f'{path}{fichier}',Key = fichier)
+				print("---------------------------------------")
+				print(f"Sauvegarde de {fichier} effectuée avec succès dans {mon_bucket}")
+				print("---------------------------------------")
+				break
+			else:
+				print(f'fichier {os.path.basename(fichier)} introuvable dans {path}')
+				continue
+if (__name__ == '__main__'):
+	sauvegarde()
